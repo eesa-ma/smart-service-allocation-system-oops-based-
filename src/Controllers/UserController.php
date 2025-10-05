@@ -37,7 +37,7 @@
 
             // Call the register method on the user object
             if ($user->register()) {
-                echo "<script>alert('Account created successfully!'); window.location.href='/path/to/your/user-signin.php';</script>";
+                echo "<script>alert('Account created successfully!'); window.location.href='../../templates/user/user-signin.php';</script>";
             } else {
                 echo "<script>alert('Error: Could not create account.'); window.history.back();</script>";
             }
