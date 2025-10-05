@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account</title>
-    <link rel="stylesheet" href="../public/css/global.css">
+    <link rel="stylesheet" href="../../public/css/global.css">
     <link rel="stylesheet" href="../user/css/account.css">
-    <link rel="stylesheet" href="../public/css/form.css">
-    <link rel="stylesheet" href="../public/css/submit-button.css">
+    <link rel="stylesheet" href="../../public/css/form.css">
+    <link rel="stylesheet" href="../../public/css/submit-button.css">
 </head>
 <body>
     <header>

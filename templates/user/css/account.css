@@ -1,0 +1,43 @@
+header>h1 {
+    text-align: center;
+}
+
+main {
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+body{
+    background-image: url('/smart-sevice-allocation-system/public/images/all.png'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+}
+
+h1{
+    color:#333333;
+}
+.backbutton {
+    width: 35%;
+    padding: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.backbutton:hover{
+    background: darkred;
+}
