@@ -1,0 +1,14 @@
+#submit {
+    /* width: 100%; */
+    text-align: center;
+    padding: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#submit:hover {
+    background-color: darkred;
+}
