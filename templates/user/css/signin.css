@@ -1,0 +1,99 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow-x: hidden;
+    background-image: url('/smart-sevice-allocation-system/public/images/user.jpg'); 
+    background-size: cover;
+    background-position: left;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+}
+.container {
+    position: absolute;
+    top: 50%;
+    right: 1%;
+    transform: translateY(-50%);
+    text-align: center;
+}
+
+h1 {
+    text-align: right;
+    margin:0 100px 20px 0;
+
+}
+
+#saveinfo {
+    text-align: left;
+}
+#loginerror {
+    color: #DC3545;
+}
+
+form {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center; /* Centers the text */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td, th {
+    text-align: center; /* Centers labels */
+    padding: 8px;
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    text-align: center; /* Centers input text */
+}
+
+#submit {
+    width: 50%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.backbutton {
+    width: 50%;
+    padding: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.backbutton:hover{
+    background: darkred;
+}
+a {
+    display: block;
+    margin-top: 10px;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
