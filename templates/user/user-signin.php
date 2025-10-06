@@ -14,18 +14,20 @@
     <header>
         <h1>SMART SERVICE ALLOCATION SYSTEM</h1>
     </header>
-    <form action="user-signin.php" method="post">
+    <form action="../../src/Controllers/AuthController.php" method="post">
+         <input type="hidden" name="role" value="admin">
+    <input type="hidden" name="action" value="signin">
         <table>
             <tr>
                 <th colspan="2">SIGN IN/SIGN UP</th>
             </tr>
             <tr>
                 <td><label for="useremail">Email id:</label></td>
-                <td><input type="email" id="useremail" name="useremail" required></td>
+                <td><input type="email" id="email" name="email" required></td>
             </tr>
             <tr>
                 <td><label for="userpassword">Password:</label></td>
-                <td><input type="password" id="userpassword" name="userpassword"></td>
+                <td><input type="password" id="password" name="password"></td>
             </tr>
             <tr>
             </tr>
