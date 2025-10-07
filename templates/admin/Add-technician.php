@@ -11,7 +11,8 @@
 <body>
     <div class="container">
     <section class="create-tech">
-        <form action="" method="post">
+        <form action="../../src/Controllers/AdminController.php" method="post">
+            <input type="hidden" name="action" value="addtechnician">
             <table>
                 <tr>
                     <th colspan="2">Register Technician</th>
@@ -47,7 +48,7 @@
                 </tr>
                 <tr>
                     <td><label for="technician-pass">Password:</label></td>
-                    <td><input type="password" name="technicain-password" id="technician-password"  required></td>
+                    <td><input type="password" name="technician-password" id="technician-password"  required></td>
                 </tr>
                 <tr>
                     <td><label for="confirm-password">Confrim-password</label></td>
