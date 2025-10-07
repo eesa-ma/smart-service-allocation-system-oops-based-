@@ -15,7 +15,7 @@
         <h1>SMART SERVICE ALLOCATION SYSTEM</h1>
     </header>
     <form action="../../src/Controllers/AuthController.php" method="post">
-         <input type="hidden" name="role" value="user">
+        <input type="hidden" name="role" value="user">
         <input type="hidden" name="action" value="signin">
         <table>
             <tr>

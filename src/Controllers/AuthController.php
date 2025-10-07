@@ -2,7 +2,7 @@
 session_start();
 include '../Core/Database.php';
 include '../Model/User.php';
-// include '/../Models/Technician.php';
+include '../Model/Technician.php';
 
 class AuthController
 {
@@ -22,16 +22,16 @@ class AuthController
 
         $model = null;
         $redirectPage = '';
-        // $userData = null;
+        $userData = null;
         $idColumn = ''; // Variable for the ID column name
         $nameColumn = 'Name'; // Assuming 'Name' is consistent
 
         // 1. Select the correct Model based on the role
         switch ($role) {
-            // case 'technician':
-            //     $model = new Technician($this->conn);
-            //     $redirectPage = '/templates/technician/dashboard.php';
-            //     break;
+            case 'technician':
+                $model = new Technician($this->conn);
+                $redirectPage = '../../templates/technician/technician-dashboard.php';
+                break;
             case 'user':
             default:
                 $model = new User($this->conn);
