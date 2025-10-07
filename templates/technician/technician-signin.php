@@ -13,7 +13,9 @@
 <body>
     <div class="container">
     <h1>TECHNICIAN LOGIN</h1>
-    <form action="technician_login.php" method="post">
+    <form action="../../src/Controllers/AuthController.php" method="post">
+        <input type="hidden" name="role" value="technician">
+        <input type="hidden" name="action" value="signin">
         <table>
             <tr>
                 <th colspan="2">SIGN IN</th>
@@ -24,12 +26,9 @@
             </tr>
             <tr>
                 <td><label for="password">Password:</label></td>
-                <td><input type="password" id="hpassword" name="techpassword"></td>
+                <td><input type="password" id="password" name="password"></td>
             </tr>
             <tr>
-            </tr>
-            <tr> 
-                <td><p id="techloginerror" name="techloginerror"></p></td> 
             </tr>
             <tr>
             <td colspan="2">

@@ -1,0 +1,173 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #f3f3e0;
+    height: 100vh;
+    display: flex;
+    background-image: url('/smart-sevice-allocation-system/public/images/techdash.jpg'); 
+    background-size: contain; /* Ensures the whole image is displayed without cropping */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents repetition */
+    background-attachment: fixed;
+}
+
+.tech_dahboard {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+.sidebar,
+.techside {
+    width: 250px;
+    background-color: #333333;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.sidebar {
+    flex-shrink: 0;
+    background-color: #333333;
+}
+
+.sidebar a {
+    padding: 10px;
+    display: block;
+    color: white;
+    text-decoration: none;
+    width: 100%;
+    text-align: center;
+}
+
+.sidebar a:hover {
+    background-color: rgb(73, 80, 87);
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.card-container {
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+}
+
+.card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    flex: 1;
+    max-width: 200px;
+}
+
+.attendance-button {
+    background-color: rgb(237, 1, 1);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.techside {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fa-user{
+    font-size: 100px; 
+    color: #fff; 
+}
+
+.logout {
+    position: absolute;
+    bottom: 45px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: red;
+    padding: 10px 20px; 
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    width: 120px;  
+    font-size: 16px; 
+    text-transform: uppercase; 
+    
+}
+.logout:hover{
+    background: darkred;
+}
+h2{
+    color: white;
+}
+.backbutton {
+    position: absolute;
+    bottom: 100px; 
+    left: 50%;
+    transform: translateX(-50%);
+    background: red;
+    padding: 10px 20px;  
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    width: 120px; 
+    font-size: 16px; 
+    text-transform: uppercase; 
+}
+.backbutton:hover {
+background: darkred; 
+}
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #333;
+    color: white;
+    padding: 20px;
+    position: fixed;
+}
+.sidebar h2 {
+    text-align: center;
+}
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+.sidebar ul li {
+    padding: 15px;
+    border-bottom: 1px solid #444;
+}
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+.sidebar ul li:hover {
+    background: #444;
+}
