@@ -21,5 +21,16 @@ Class Technician {
         }
         return false;
     }
+
+    public function createAccount() {
+        $sql = "INSERT INTO technician (Name, Skills, Location, Phone_No, Email, Password)
+        VALUES ('$this->name','$this->skills','$this->address','$this->phoneno','$this->email','$this->password')";
+        
+        if (mysqli_query($this->conn, $sql)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 ?>
