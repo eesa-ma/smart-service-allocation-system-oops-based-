@@ -1,25 +1,22 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sign-in</title>
+    <title>TECHNICIAN LOGIN</title>
     <link rel="stylesheet" href="../../public/css/global.css">
-    <link rel="stylesheet" href="css/signin.css">
+    <link rel="stylesheet" href="../technician/css/signin.css">
     <link rel="stylesheet" href="../../public/css/form.css">
     <link rel="stylesheet" href="../../public/css/submit-button.css">
 </head>
 <body>
     <div class="container">
-    <header>
-        <h1>SMART SERVICE ALLOCATION SYSTEM</h1>
-    </header>
-    <form action="../../src/Controllers/AuthController.php" method="post">
-         <input type="hidden" name="role" value="user">
-        <input type="hidden" name="action" value="signin">
+    <h1>TECHNICIAN LOGIN</h1>
+    <form action="technician_login.php" method="post">
         <table>
             <tr>
-                <th colspan="2">SIGN IN/SIGN UP</th>
+                <th colspan="2">SIGN IN</th>
             </tr>
             <tr>
                 <td><label for="email">Email id:</label></td>
@@ -27,15 +24,17 @@
             </tr>
             <tr>
                 <td><label for="password">Password:</label></td>
-                <td><input type="password" id="password" name="password"></td>
+                <td><input type="password" id="hpassword" name="techpassword"></td>
             </tr>
             <tr>
+            </tr>
+            <tr> 
+                <td><p id="techloginerror" name="techloginerror"></p></td> 
             </tr>
             <tr>
             <td colspan="2">
                 <center><input type="submit" value="Sign In" id="submit" name="submit"></center>
             </td>
-            </tr>
             <tr>
             <td colspan="2">
                 <center><button onclick="history.back()" class="backbutton" name="backbutton" >
@@ -43,14 +42,12 @@
         </button></center>
             </td>
             </tr>
-            <tr>
-               <td colspan="2"><center><a href="../user/user-verify.php" >Forgotten your password?</a></center></td> 
             </tr>
             <tr>
-                <td colspan="2"><center><a href="../user/create-account.php">Don't have an account?</a></center></td>
+               <td colspan="2"><center><a href="../technician/verify-technician.php" >Forgotten your password?</a></center></td> 
             </tr>
         </table>
     </form>
-</div>
+    </div>
 </body>
 </html>

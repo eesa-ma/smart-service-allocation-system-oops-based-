@@ -1,0 +1,69 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow-x: hidden;
+    background-color: #f3f3e0;
+    background-image: url('/smart-sevice-allocation-system/public/images/tech.png'); 
+    background-size: contain;
+    background-position: left;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+}
+.container {
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    transform: translateY(-50%);
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    margin:0 100px 20px 0;
+
+}
+#saveinfo {
+    text-align: left;
+}
+#loginerror {
+    color: #DC3545;
+}
+#submit {
+    width: 50%;
+    padding: 10px;
+}
+a {
+    display: block;
+    margin-top: 10px;
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+form {
+    background-color: #333333;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+.backbutton {
+    width: 50%;
+    padding: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 10px; 
+}
+
+.backbutton:hover {
+    background: darkred;
+}

@@ -22,8 +22,8 @@
                     <a href="#">Login ▼</a>
                     <ul class="dropdown-menu">
                     <li><a href="../templates/user/user-signin.php">User</a></li>
-                        <li><a href="../admin/admin-login.php">Admin</a></li>
-                        <li><a href="../technician/technician_login.php">Technician</a></li>
+                        <li><a href="../templates/admin/admin-signin.php">Admin</a></li>
+                        <li><a href="../templates/technician/technician-signin.php">Technician</a></li>
                     </ul>
                 </li>
             </ul>
