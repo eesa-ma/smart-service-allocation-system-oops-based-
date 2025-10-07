@@ -2,8 +2,7 @@
 session_start();
 include '../Core/Database.php';
 include '../Model/User.php';
-// require_once __DIR__ . '/../Models/Admin.php';
-// require_once __DIR__ . '/../Models/Technician.php';
+// include '/../Models/Technician.php';
 
 class AuthController
 {
@@ -29,10 +28,6 @@ class AuthController
 
         // 1. Select the correct Model based on the role
         switch ($role) {
-            // case 'admin':
-            //     $model = new Admin($this->conn);
-            //     $redirectPage = '/templates/admin/dashboard.php';
-            //     break;
             // case 'technician':
             //     $model = new Technician($this->conn);
             //     $redirectPage = '/templates/technician/dashboard.php';
