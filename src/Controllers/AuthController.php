@@ -1,8 +1,8 @@
 <?php
 session_start();
-include '../Core/Database.php';
-include '../Model/User.php';
-include '../Model/Technician.php';
+include_once __DIR__ . '/../Core/Database.php';
+include_once __DIR__ . '/../Model/User.php';
+include_once __DIR__ . '/../Model/Technician.php';
 
 class AuthController
 {
@@ -20,22 +20,25 @@ class AuthController
         $password = $_POST["password"];
         $role = $_POST["role"];
 
-        $model = null;
-        $redirectPage = '';
-        $userData = null;
-        $idColumn = ''; // Variable for the ID column name
-        $nameColumn = 'Name'; // Assuming 'Name' is consistent
+    $model = null;
+    $redirectPage = '';
+    $userData = null;
+    $idColumn = ''; // Variable for the ID column name
+    $nameColumn = 'Name'; // Assuming 'Name' is consistent
 
         // 1. Select the correct Model based on the role
         switch ($role) {
             case 'technician':
                 $model = new Technician($this->conn);
+                // Match DB column case exactly
+                $idColumn = 'Technician_ID';
                 $redirectPage = '../../templates/technician/technician-dashboard.php';
                 break;
             case 'user':
             default:
                 $model = new User($this->conn);
-                $idColumn = 'user_ID';
+                // Match DB column case exactly
+                $idColumn = 'User_ID';
                 $redirectPage = '../../templates/user/user-dashboard.php';
                 break;
         }
@@ -46,6 +49,10 @@ class AuthController
         // 3. Verify password and redirect
         if ($userData) {
             if ($password == $userData["Password"]) {
+                // Harden session on successful login
+                if (session_status() === PHP_SESSION_ACTIVE) {
+                    session_regenerate_id(true);
+                }
                 $_SESSION["role"] = $role;
                 $_SESSION["id"] = $userData[$idColumn]; // Ensure your ID column is named consistently
                 $_SESSION["name"] = $userData[$nameColumn];

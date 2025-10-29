@@ -16,6 +16,7 @@
     </header>
     <main class="create-form">
         <form action="../../src/Controllers/UserController.php" method="post">
+            <input type="hidden" name="action" value="register">
             <table>
                 <tr>
                     <th colspan="2">Create Account</th>

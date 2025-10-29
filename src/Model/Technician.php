@@ -4,7 +4,7 @@ Class Technician {
     public $name;
     public $skills;
     public $email;
-    public $phoneNo;
+    public $phoneno;
     public $address;
     public $availabilityStatus;
     public $password;

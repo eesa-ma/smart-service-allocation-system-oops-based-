@@ -16,7 +16,7 @@
         <h2>Dashboard</h2>
         <ul>
             <li><a href="../public/index.php">Home</a></li>
-            <li><a href="../user/user-request.php">Request a Service</a></li>
+            <li><a href="../user/request-service.php">Request a Service</a></li>
             <li><a href="../user/track-service.php">Track Your Service Status</a></li>
             <li><a href="../user/user-feedback.php">Rating and Feedback</a></li>
         </ul>

@@ -1,9 +1,9 @@
 <?php
     session_start();
 
-    include '../Core/Database.php';
-    include '../Model/Admin.php';
-    include '../Model/Technician.php';
+    include __DIR__ . '/../Core/Database.php';
+    include __DIR__ . '/../Model/Admin.php';
+    include __DIR__ . '/../Model/Technician.php';
 
     class AdminController {
         private $conn;
@@ -23,6 +23,7 @@
 
             if($adminData) {
                 if($password == $adminData["Password"]) {
+                    session_regenerate_id(true);
                     $_SESSION["Admin_ID"] = $adminData["Admin_ID"]; 
 
                     header("Location: " . $redirectPage);
@@ -41,8 +42,8 @@
                 $confirmPassword = $_POST["confirm-password"];
 
                 if ($password !== $confirmPassword) {
-                echo "<script>alert('Passwords do not match.'); window.history.back();</script>";
-                exit();
+                    echo "<script>alert('Passwords do not match.'); window.history.back();</script>";
+                    exit();
                 }
 
                 $technician = new Technician($this->conn);
@@ -56,12 +57,12 @@
                 $pincode = $_POST["pincode"];
                 $technician->address = "$house, $street, $city - $pincode";
                 $technician->password = $password;
-            }
 
-            if ($technician->createAccount()) {
-                echo "<script>alert('Account created successfully!'); window.location.href='../../templates/admin/admin-dashboard.php';</script>";
-            } else {
-                echo "<script>alert('Error: Could not create account.'); window.history.back();</script>";
+                if ($technician->createAccount()) {
+                    echo "<script>alert('Account created successfully!'); window.location.href='../../templates/admin/admin-dashboard.php';</script>";
+                } else {
+                    echo "<script>alert('Error: Could not create account.'); window.history.back();</script>";
+                }
             }
         }
     }
