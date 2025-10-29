@@ -15,9 +15,9 @@ class User
 
     public function register()
     {
-
-        $sql = "INSERT INTO user (Name, Email, Phone_No, Address, Password) 
-                VALUES ('$this->name', '$this->email', '$this->phoneNo', '$this->address', '$this->password')";
+        
+    $sql = "INSERT INTO `user` (Name, Email, Phone_No, Address, Password) 
+        VALUES ('$this->name', '$this->email', '$this->phoneNo', '$this->address', '$this->password')";
 
         if (mysqli_query($this->conn, $sql)) {
             return true;
@@ -27,7 +27,7 @@ class User
     }
 
     public function findByEmail($email) {
-        $sql = "SELECT * FROM user WHERE Email = '$email'";
+        $sql = "SELECT * FROM `user` WHERE Email = '$email'";
         $result = mysqli_query($this->conn, $sql);
         if ($result && mysqli_num_rows($result) == 1) {
             return mysqli_fetch_assoc($result);

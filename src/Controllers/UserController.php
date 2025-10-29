@@ -1,6 +1,12 @@
 <?php
-    include '../Core/Database.php';
-    include '../Model/User.php';
+    // Ensure session is started for accessing $_SESSION['id'] during requests
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    include_once __DIR__ . '/../Core/Database.php';
+    include_once __DIR__ . '/../Model/User.php';
+    include_once __DIR__ . '/../Model/ServiceRequest.php';
 
     class UserController {
 
@@ -43,12 +49,45 @@
             }
         }
     }
+
+    public function requestService() {
+      if (!isset($_SESSION["id"])) {
+        echo "<script>alert('User not logged in. Please log in first.'); window.location.href='../../templates/user/user-signin.php';</script>";
+        exit();  
+        }  
+
+        $serviceRequest = new serviceRequest($this->conn);
+
+        $serviceRequest->servicetype = $_POST["serviceType"];
+        $serviceRequest->description = $_POST["description"];
+        $serviceRequest->location = $_POST["location"]; 
+        $serviceRequest->mobileno = $_POST["mobile"];
+
+        if(isset($_SESSION["id"])) {
+            $serviceRequest->userID = $_SESSION["id"];
+        }
+
+        if($serviceRequest->addrequest()) {
+            echo "<script>
+                    alert('Your service request has been submitted successfully!');
+                    window.location.href = '../../templates/user/user-dashboard.php';
+                  </script>";
+        } else {
+            echo "Error: " . mysqli_error($this->conn);
+        }
+    } 
 }
 
-//calls register method when form gets submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $controller = new UserController();
-    $controller->register();
+    $userController = new UserController();
+
+    if (isset($_POST['action'])) {
+        if ($_POST['action'] == 'register') {
+            $userController->register();
+        } elseif ($_POST['action'] == 'request_service') {
+            $userController->requestService();
+        }
+    }
 }
 
 ?>
