@@ -3,17 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Sign In - Smart Service Allocation</title>
-    <link rel="stylesheet" href="../../public/css/global.css">
-    <link rel="stylesheet" href="css/signin.css">
-    <link rel="stylesheet" href="../../public/css/form.css">
-    <link rel="stylesheet" href="../../public/css/submit-button.css">
+    <title>User Sign In</title>
+    <link rel="stylesheet" href="css/signin.css?v=2.0">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>SMART SERVICE ALLOCATION SYSTEM</h1>
-        </header>
         <main>
             <form action="../../src/Controllers/AuthController.php" method="post" id="signin-form">
                 <input type="hidden" name="role" value="user">
