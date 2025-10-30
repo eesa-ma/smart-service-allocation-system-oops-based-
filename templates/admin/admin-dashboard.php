@@ -1,137 +1,125 @@
+<?php
+// Session guard
+session_start();
+if (!isset($_SESSION['Admin_ID'])) {
+    header('Location: admin-signin.php');
+    exit;
+}
+
+// Lightweight metrics (counts)
+require_once __DIR__ . '/../../src/Core/Database.php';
+$db = new Database();
+$conn = $db->connect();
+
+function count_rows($conn, $table, $where = '') {
+    $sql = "SELECT COUNT(*) AS c FROM $table" . ($where ? " WHERE $where" : '');
+    $res = mysqli_query($conn, $sql);
+    if ($res) {
+        $row = mysqli_fetch_assoc($res);
+        return (int)($row['c'] ?? 0);
+    }
+    return 0;
+}
+
+$totalUsers        = count_rows($conn, '`user`');
+$totalTechnicians  = count_rows($conn, 'technician');
+$totalRequests     = count_rows($conn, 'service_request');
+$pendingRequests   = count_rows($conn, 'service_request', "Status='Pending'");
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../public/css/global.css">
     <title>Admin Dashboard</title>
-    <style>
-        body {
-    font-family: 'nunito', sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    background: #f3f3e0;
-    background-image: url('/smart-sevice-allocation-system/public/images/admindash.png'); 
-    background-size: contain; /* Ensures the whole image is displayed without cropping */
-    background-position: right; /* Centers the image */
-    background-repeat: no-repeat; /* Prevents repetition */
-    background-attachment: fixed; /* Keeps the image fixed while scrolling */
-}
-        .sidebar {
-            width: 200px;
-            height: 100vh;
-            background: #333;
-            color: white;
-            padding: 20px;
-            position: fixed;
-        }
-        .sidebar h2 {
-            text-align: center;
-        }
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
-        .sidebar ul li {
-            padding: 15px;
-            border-bottom: 1px solid #444;
-        }
-        .sidebar ul li a {
-            color: white;
-            text-decoration: none;
-            display: block;
-        }
-        .sidebar ul li:hover {
-            background: #444;
-        }
-        .main-content {
-            margin-left: 260px;
-            padding: 20px;
-            width: 100%;
-        }
-        .dashboard-cards {
-            display: flex;
-            gap: 20px;
-        }
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px gray;
-            flex: 1;
-            text-align: center;
-        }
-        .logout {
-            position: absolute;
-            bottom: 45px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: red;
-            padding: 10px 20px; 
-            color: white;
-            text-align: center;
-            border-radius: 5px;
-            cursor: pointer;
-            border: none;
-            width: 120px;  
-            font-size: 16px; 
-            text-transform: uppercase; 
-        }
-        .backbutton {
-            position: absolute;
-            bottom: 100px; 
-            left: 50%;
-            transform: translateX(-50%);
-            background: red;
-            padding: 10px 20px;  
-            color: white;
-            text-align: center;
-            border-radius: 5px;
-            cursor: pointer;
-            border: none;
-            width: 120px; 
-            font-size: 16px; 
-            text-transform: uppercase; 
-        }
-    .backbutton:hover {
-        background: darkred; 
-        }
-
-    </style>
+    <link rel="stylesheet" href="css/dashboard.css?v=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="sidebar">
-        <h2>Admin Panel</h2>
-        <ul>
-            <li><a href="#home">Dashboard</a></li>
-            <li><a href="../admin/service-manage.php">Manage Services</a></li>
-            <li><a href="../admin/Add-technician.php">Add Technician</a></li>
-            <li><a href="../admin/track-service.php">Track Service Status</a></li>
-            <li><a href="../admin/admin-feedback.php">Feedbacks</a></li>
-        </ul>
-        <button onclick="history.back()" class="backbutton" name="backbutton" >
-        back
-        </button>
-        <form action="../includes/logout.php" method="POST">
-            <button class="logout" name="logout">Logout</button>
-        </form>
-    </div>
-    <div class="main-content" id="home">
-        <h1>Welcome, Admin</h1>
-        <div class="dashboard-cards">
-            <div class="card">
-                <h3>Total Users</h3>
-                <p><?php echo $totalUsers; ?></p>
-            </div>
-            <div class="card">
-                <h3>Active Services</h3>
-                <p><?php echo $activeServices; ?></p>
-            </div>
-            <div class="card">
-                <h3>Pending Requests</h3>
-                <p><?php echo $pendingRequests; ?></p>
-            </div>
+    <aside class="sidebar">
+        <div class="brand">
+            <i class="fas fa-user-shield"></i>
+            <span>Admin Panel</span>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
-    </div>
+        <nav>
+            <ul class="nav-list">
+                <li><a href="#home" class="active"><i class="fas fa-gauge"></i> Dashboard</a></li>
+                <li><a href="../admin/service-manage.php"><i class="fas fa-tools"></i> Manage Services</a></li>
+                <li><a href="../admin/Add-technician.php"><i class="fas fa-user-plus"></i> Add Technician</a></li>
+                <li><a href="../admin/track-service.php"><i class="fas fa-location-dot"></i> Track Service</a></li>
+                <li><a href="../admin/admin-feedback.php"><i class="fas fa-comments"></i> Feedbacks</a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-actions">
+            <button onclick="window.location.href='../../public/index.php'" class="btn back">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </button>
+            <form action="../includes/logout.php" method="POST">
+                <button class="btn logout" name="logout"><i class="fas fa-right-from-bracket"></i> Logout</button>
+            </form>
+        </div>
+    </aside>
+
+    <main class="main" id="home">
+        <header class="topbar">
+            <h1>Welcome, Admin</h1>
+        </header>
+
+        <section class="cards">
+            <div class="card gradient-1">
+                <div class="card-icon"><i class="fas fa-users"></i></div>
+                <div class="card-content">
+                    <span class="card-label">Total Users</span>
+                    <span class="card-value"><?php echo $totalUsers; ?></span>
+                </div>
+            </div>
+            <div class="card gradient-2">
+                <div class="card-icon"><i class="fas fa-user-cog"></i></div>
+                <div class="card-content">
+                    <span class="card-label">Technicians</span>
+                    <span class="card-value"><?php echo $totalTechnicians; ?></span>
+                </div>
+            </div>
+            <div class="card gradient-3">
+                <div class="card-icon"><i class="fas fa-clipboard-list"></i></div>
+                <div class="card-content">
+                    <span class="card-label">Service Requests</span>
+                    <span class="card-value"><?php echo $totalRequests; ?></span>
+                </div>
+            </div>
+            <div class="card gradient-4">
+                <div class="card-icon"><i class="fas fa-hourglass-half"></i></div>
+                <div class="card-content">
+                    <span class="card-label">Pending</span>
+                    <span class="card-value"><?php echo $pendingRequests; ?></span>
+                </div>
+            </div>
+        </section>
+
+        <section class="quick-actions">
+            <h2>Quick Actions</h2>
+            <div class="actions-grid">
+                <a class="action" href="../admin/Add-technician.php"><i class="fas fa-user-plus"></i> Add Technician</a>
+                <a class="action" href="../admin/service-manage.php"><i class="fas fa-screwdriver-wrench"></i> Manage Services</a>
+                <a class="action" href="../admin/track-service.php"><i class="fas fa-route"></i> Track Requests</a>
+                <a class="action" href="../admin/admin-feedback.php"><i class="fas fa-comment-dots"></i> Review Feedbacks</a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Mobile sidebar toggle
+        const toggle = document.getElementById('mobileMenuToggle');
+        const sidebar = document.querySelector('.sidebar');
+        if (toggle) {
+            toggle.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+            });
+        }
+    </script>
+</body>
+</html>
