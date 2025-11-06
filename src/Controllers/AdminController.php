@@ -48,7 +48,15 @@
 
                 $technician = new Technician($this->conn);
 
-                $technician->name = $_POST["tech-name"];      
+                $technician->name = $_POST["tech-name"];
+                
+                // Handle multiple skills - convert array to comma-separated string
+                if (isset($_POST["tech-skill"]) && is_array($_POST["tech-skill"])) {
+                    $technician->skills = implode(", ", $_POST["tech-skill"]);
+                } else {
+                    $technician->skills = isset($_POST["tech-skill"]) ? $_POST["tech-skill"] : "";
+                }
+                
                 $technician->email = $_POST["tech-mail"];
                 $technician->phoneno = $_POST["tech-phone"];
                 $house = $_POST["house"];
