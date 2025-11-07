@@ -133,5 +133,26 @@
             
             return $requests;
         }
+
+        public function getAllServiceRequests() {
+            $query = "SELECT sr.Request_ID, sr.Description, sr.Location, sr.Status,
+                            u.name AS user_name, u.Phone_NO,
+                            t.Name AS technician_name
+                    FROM service_request sr
+                    LEFT JOIN user u ON sr.User_ID = u.user_ID
+                    LEFT JOIN technician t ON sr.Technician_ID = t.Technician_ID
+                    ORDER BY sr.Request_ID DESC";
+            
+            $result = mysqli_query($this->conn, $query);
+            
+            $requests = [];
+            if ($result) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $requests[] = $row;
+                }
+            }
+            
+            return $requests;
+        }
     }
 ?>
