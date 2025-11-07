@@ -80,7 +80,7 @@ $requests = $adminController->getPendingRequests();
                                             $technicians = $adminController->getAvailableTechnicians($row['Location']);
                                             foreach ($technicians as $tech): 
                                             ?>
-                                                <option value='<?php echo $tech['Techinician_ID']; ?>'>
+                                                <option value='<?php echo $tech['Technician_ID']; ?>'>
                                                     <?php echo htmlspecialchars($tech['Name']) . ' - ' . htmlspecialchars($tech['Skills']); ?>
                                                 </option>
                                             <?php endforeach; ?>
