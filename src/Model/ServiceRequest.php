@@ -24,8 +24,6 @@
                 return false;
             }
         }
-        
-    // ADD THESE METHODS TO YOUR EXISTING ServiceRequest CLASS
 
         public function assignTechnician($request_id, $technician_id) {
             $sql = "UPDATE service_request 
