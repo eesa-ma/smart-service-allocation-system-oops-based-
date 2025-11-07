@@ -1,12 +1,32 @@
 <?php 
-    session_start();
-    
-    // Initialize variables to prevent warnings
-    $total_orders = 0;
-    $pending_orders = 0;
-    
-    // TODO: Fetch actual data from database
-    // Example: $total_orders = count($serviceRequestModel->getOrdersByUserId($_SESSION['id']));
+session_start();
+
+// Redirect if not logged in (adjust session key if different)
+if(!isset($_SESSION['id'])){
+    header('Location: ../user/user-signin.php');
+    exit; 
+}
+
+require_once '../../src/Core/Database.php';
+require_once '../../src/Model/ServiceRequest.php';
+
+$db = (new Database())->connect();
+$service = new serviceRequest($db);
+
+$userId = intval($_SESSION['id']);
+$requests = $service->getUserServiceRequests($userId);
+
+$total_orders = count($requests);
+$pending_orders = 0;
+$completed_orders = 0;
+
+foreach($requests as $r){
+    if($r['Status'] === 'Pending' || $r['Status'] === 'Assigned'){
+        $pending_orders++;
+    } elseif($r['Status'] === 'Completed') {
+        $completed_orders++;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +45,6 @@
         
         <nav class="sidebar-nav">
             <ul>
-                <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
                 <li><a href="../user/request-service.php"><i class="fas fa-plus-circle"></i> Request a Service</a></li>
                 <li><a href="../user/track-service.php"><i class="fas fa-search"></i> Track Service Status</a></li>
                 <li><a href="../user/user-feedback.php"><i class="fas fa-star"></i> Rating & Feedback</a></li>
@@ -77,7 +96,7 @@
                 </div>
                 <div class="card-content">
                     <h3>Completed</h3>
-                    <p class="card-number"><?php echo ($total_orders - $pending_orders); ?></p>
+                    <p class="card-number"><?php echo $completed_orders; ?></p>
                 </div>
             </div>
         </div>
