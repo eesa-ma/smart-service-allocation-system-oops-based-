@@ -28,6 +28,29 @@ class TechnicianController {
         echo $newStatus; // Return '0', '1', or 'error'
         exit;
     }
+
+    public function updateTaskStatus() {
+    
+    if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'technician') {
+        echo "<script>alert('Unauthorized access'); window.location.href='../../templates/technician/technician-signin.php';</script>";
+        exit;
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $requestId = $_POST['request_id'];
+            $status = $_POST['status'];
+            $technicianId = $_SESSION['id'];
+
+            require_once __DIR__ . '/../Model/ServiceRequest.php';
+            $serviceRequest = new ServiceRequest($this->conn);
+
+            if ($serviceRequest->updateTaskStatus($requestId, $technicianId, $status)) {
+                echo "<script>alert('Status updated successfully!'); window.location.href='../../templates/technician/assignedtask.php';</script>";
+            } else {
+                echo "<script>alert('Failed to update status.'); window.location.href='../../templates/technician/assignedtask.php';</script>";
+            }
+        }
+    }
 }
 
 // Route the request

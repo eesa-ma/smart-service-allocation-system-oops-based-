@@ -4,7 +4,7 @@
 
    class serviceRequest {
     private $conn;
-    //public $servicetype; add service type also
+    //public $servicetype; 
     public $description;
     public $location;
     public $status;
@@ -75,6 +75,45 @@
             }
             
             return $requests;
+        }
+
+        public function getAssignedTasks($technicianId) {
+            $query = "SELECT r.Request_ID, u.name AS customer_name, 
+                            u.Address, u.Phone_NO, r.Status
+                    FROM service_request r
+                    JOIN user u ON r.User_ID = u.user_ID
+                    WHERE r.Technician_ID = '$technicianId' 
+                    AND r.Status NOT IN ('Completed', 'Rejected')
+                    ORDER BY r.Request_ID DESC";
+            
+            $result = mysqli_query($this->conn, $query);
+            
+            $tasks = [];
+            if ($result) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $tasks[] = $row;
+                }
+            }
+            
+            return $tasks;
+        }
+
+        public function updateTaskStatus($requestId, $technicianId, $status) {
+            $query = "UPDATE service_request 
+                    SET Status = '$status' 
+                    WHERE Request_ID = '$requestId' 
+                    AND Technician_ID = '$technicianId'";
+            
+            if (mysqli_query($this->conn, $query)) {
+                if ($status === 'Rejected') {
+                    $clearQuery = "UPDATE service_request 
+                                SET Technician_ID = NULL 
+                                WHERE Request_ID = '$requestId'";
+                    mysqli_query($this->conn, $clearQuery);
+                }
+                return true;
+            }
+            return false;
         }
     }
 ?>
