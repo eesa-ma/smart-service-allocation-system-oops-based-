@@ -1,75 +1,65 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account</title>
+
+    <!-- keep your global styles -->
     <link rel="stylesheet" href="../../public/css/global.css">
-    <link rel="stylesheet" href="../user/css/account.css">
     <link rel="stylesheet" href="../../public/css/form.css">
     <link rel="stylesheet" href="../../public/css/submit-button.css">
+
+    <!-- page-specific styles (separate file) -->
+    <link rel="stylesheet" href="../user/css/account.css">
 </head>
 <body>
     <header>
         <h1>Smart Service Allocation System</h1>
     </header>
-    <main class="create-form">
-        <form action="../../src/Controllers/UserController.php" method="post">
-            <input type="hidden" name="action" value="register">
-            <table>
-                <tr>
-                    <th colspan="2">Create Account</th>
-                </tr>      
-                <tr>
-                    <td><label for="user-name">Name:</label></td>
-                    <td><input type="text" name="user-name" id="user-name" placeholder="john" required></td>
-                </tr>
-                <tr>
-                    <td><label for="user-email">Email ID:</label></td>
-                    <td><input type="email" name="user-email" id="user-email" placeholder="john@gmail.com" required></td>
-                </tr>
-                <tr>
-                    <td><label for="user-phone">Phone no:</label></td>
-                    <td><input type="tel" name="user-phone" id="user-phone" placeholder="123-456-7890" pattern="[0-9]{10}" required></td>
-                </tr>
-                <tr>
-                    <td rowspan="4"><label for="user-location">Location:</label></td>
-                    <td><input type="text" name="house" id="house" placeholder="House no and house name" required></td>
-                </tr>
-                <tr>
-                    <td><input type="text" name="street" id="street" placeholder="Street name" required></td>
-                </tr>
-                <tr>
-                    <td><input type="text" name="city" id="city" placeholder="City name" required></td>
-                </tr>
-                <tr>
-                    <td><input type="number" name="pincode" id="pincode" placeholder="Postal code" required></td>
-                </tr>
 
-                <tr>
-                    <td><label for="user-password">Password:</label></td>
-                    <td><input type="password" name="user-password" id="user-password" placeholder="create a strong password" required></td>
-                </tr>
-                <tr>
-                    <td><label for="confirm-password">Confirm Password:</label></td>
-                    <td><input type="password" name="confirm-password" id="confirm-password" placeholder="Enter password again" required></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><center><input type="submit" value="Create account" id="submit" name="submit"></center></td>
-                </tr>
-                <tr>
-            <td colspan="2">
-                <center><button onclick="history.back()" class="backbutton" name="backbutton" >
-        back
-        </button></center>
-            </td>
-            </tr>
-                <tr>
-                    <td colspan="2">Have an account already? <a href="../user/user-signin.php">Login</a></td>
-                </tr>
-            </table>
-        </form>
+    <main class="create-form">
+        <div class="card">
+            <div class="card-header">
+                <h2>Create Account</h2>
+                <p class="lead">Register to access your service dashboard</p>
+            </div>
+
+            <div class="card-body">
+                <form action="../../src/Controllers/UserController.php" method="post" class="register-form" novalidate>
+                    <input type="hidden" name="action" value="register">
+
+                    <label for="user-name">Name</label>
+                    <input type="text" name="user-name" id="user-name" placeholder="john" required>
+
+                    <label for="user-email">Email ID</label>
+                    <input type="email" name="user-email" id="user-email" placeholder="john@gmail.com" required>
+
+                    <label for="user-phone">Phone no</label>
+                    <input type="tel" name="user-phone" id="user-phone" placeholder="1234567890" pattern="[0-9]{10}" required>
+
+                    <fieldset class="location">
+                        <legend>Location</legend>
+                        <input type="text" name="house" id="house" placeholder="House no and house name" required>
+                        <input type="text" name="street" id="street" placeholder="Street name" required>
+                        <input type="text" name="city" id="city" placeholder="City name" required>
+                        <input type="number" name="pincode" id="pincode" placeholder="Postal code" required>
+                    </fieldset>
+
+                    <label for="user-password">Password</label>
+                    <input type="password" name="user-password" id="user-password" placeholder="create a strong password" required>
+
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" name="confirm-password" id="confirm-password" placeholder="Enter password again" required>
+
+                    <div class="actions">
+                        <button type="submit" id="submit" name="submit" class="btn-primary">Create account</button>
+                        <a class="btn-secondary" href="../user/user-signin.php">Have an account already? Login</a>
+                        <button type="button" class="backbutton" onclick="history.back()">← Back</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </main>
 </body>
 </html>
