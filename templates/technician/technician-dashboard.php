@@ -161,5 +161,6 @@ $currentStatus = $statusData['Availability_Status'] ?? '0';
             .catch(error => console.error('Fetch Error:', error));
         });
     </script>
+    <script src="../technician/js/attendance.js"></script>
 </body>
 </html>
