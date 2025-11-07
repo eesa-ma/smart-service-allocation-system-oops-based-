@@ -1,191 +1,269 @@
 :root{
-  --bg-1: #6ea1ff;
-  --bg-2: #7750b6;
-  --card-width: 480px;
-  --radius: 12px;
+  --bg-1: #647bff;            /* bluish */
+  --bg-2: #7f4fc8;            /* purple */
+  --card-width: 820px;
+  --radius: 18px;
   --muted: #8a8fa6;
   --surface: #ffffff;
+  --text: #243147;
+  --input-border: #e9edf4;
+  --header-height: 220px;
 }
 
-/* Reset basics */
-*{ box-sizing: border-box; }
-html,body{ height:100%; margin:0; font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; color:#222; }
+/* Reset & base */
+*{box-sizing:border-box}
+html,body{
+  height:100%;
+  margin:0;
+  font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  color:var(--text);
+  background:none;
+}
 
-/* Page background (match the purple-blue gradient + faint pattern from the reference) */
-body{
-  background:
-    radial-gradient(1200px 600px at 10% 20%, rgba(255,255,255,0.03), transparent 10%),
-    radial-gradient(900px 500px at 90% 80%, rgba(0,0,0,0.04), transparent 10%),
-    linear-gradient(135deg, var(--bg-1) 0%, #8f61d0 100%);
+/* Page layout — keep left decorative area, but center the right card vertically & horizontally */
+.page{
   min-height:100vh;
+  display:grid;
+  grid-template-columns: 1fr minmax(420px, var(--card-width));
+  gap:48px;
+  align-items:center;         /* vertical centering */
+  justify-items:center;      /* center right column content */
+  padding:36px 40px;
+  background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 100%);
+  position:relative;
+  overflow:hidden;
+}
+
+/* decorative left SVG (subtle, large) */
+.page::after{
+  content:"";
+  position:absolute;
+  left:4%;
+  top:6%;
+  width:62%;
+  height:88%;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 800'><g fill='none' stroke='%23ffffff' stroke-opacity='0.06' stroke-width='2'><circle cx='120' cy='120' r='32'/><circle cx='220' cy='220' r='22'/><circle cx='340' cy='90' r='26'/><circle cx='520' cy='180' r='32'/><circle cx='800' cy='160' r='28'/><line x1='120' y1='120' x2='220' y2='220'/><line x1='220' y1='220' x2='340' y2='90'/><line x1='340' y1='90' x2='520' y2='180'/><line x1='520' y1='180' x2='800' y2='160'/></g></svg>");
+  background-repeat:no-repeat;
+  background-position:left top;
+  background-size:contain;
+  opacity:0.12;
+  pointer-events:none;
+}
+
+/* Card container and card */
+.card-wrap{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:3;
+  width:100%;
+}
+.card{
+  width:100%;
+  max-width:760px;       /* comfortable width for form content */
+  background:transparent;
+  border-radius:var(--radius);
+  overflow:visible;
+  box-shadow: 0 30px 80px rgba(18,28,61,0.12);
+  position:relative;
+  margin:0 auto;
+}
+
+/* Gradient header — large and prominent */
+.card-header{
+  height:var(--header-height);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)),
+    linear-gradient(135deg, var(--bg-1), var(--bg-2));
+  color:#fff;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:40px 20px;
-}
-
-/* header: if global header exists, keep minimal override */
-header h1{
-  position: absolute;
-  top: 18px;
-  left: 22px;
-  margin:0;
-  color: rgba(255,255,255,0.95);
-  font-weight:600;
-  font-size:16px;
-  opacity:0.95;
-  user-select:none;
-}
-
-/* Center card wrapper */
-.create-form .card{
-  width:100%;
-  max-width:var(--card-width);
-  background: var(--surface);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(39,44,69,0.25), 0 2px 6px rgba(0,0,0,0.08);
-}
-
-/* Header with gradient */
-.card-header{
-  background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
-  color: #fff;
-  padding: 28px 22px;
+  flex-direction:column;
+  padding:34px 28px;
   text-align:center;
+  border-radius:calc(var(--radius)) calc(var(--radius)) 0 0;
+  box-shadow: inset 0 -12px 30px rgba(0,0,0,0.06);
+  position:relative;
+  z-index:4;
 }
-.card-header h2{ margin:0; font-size:22px; font-weight:700; }
-.card-header .lead{ margin:8px 0 0; font-size:13px; opacity:0.95; font-weight:400; }
 
-/* Body */
-.card-body{ padding: 22px; }
+/* Avatar */
+.avatar{
+  width:84px;
+  height:84px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: rgba(255,255,255,0.12);
+  margin-bottom:14px;
+  font-size:32px;
+  color:rgba(255,255,255,0.95);
+  border:2px solid rgba(255,255,255,0.08);
+  box-shadow: 0 8px 24px rgba(111,91,209,0.12);
+}
+.card-header h2{ margin:0; font-size:26px; font-weight:700; letter-spacing:0.2px; }
+.card-header .lead{ margin:8px 0 0; font-size:13px; opacity:0.95; }
 
-/* form layout: vertical, mobile-first */
-.register-form{
+/* White form panel overlapping the header — centered and tidy */
+.card > form.register-form,
+.card form.register-form,
+.card > .register-form{
+  background:var(--surface);
+  border-radius:0 0 calc(var(--radius)) calc(var(--radius));
+  margin: -36px auto 28px;     /* overlap the header; auto centers horizontally */
+  padding:30px 36px 36px;
+  box-shadow: 0 20px 50px rgba(30,40,80,0.08);
+  z-index:5;
+  position:relative;
+  border: 1px solid rgba(0,0,0,0.04);
   display:flex;
   flex-direction:column;
-  gap:12px;
+  gap:18px;
+  width: calc(100% - 64px);
+  max-width:700px;
 }
 
-/* labels and inputs */
+/* Internal layout */
+.row{
+  display:flex;
+  gap:20px;
+}
+.row .col{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+
+/* Labels & inputs */
 .register-form label{
   font-size:13px;
-  font-weight:600;
+  font-weight:700;
   color:#25304b;
-  margin-bottom:4px;
+  margin-bottom:8px;
 }
 .register-form input[type="text"],
 .register-form input[type="email"],
 .register-form input[type="tel"],
 .register-form input[type="number"],
-.register-form input[type="password"]{
+.register-form input[type="password"],
+.register-form select,
+.register-form textarea{
   width:100%;
-  padding:12px 14px;
-  border-radius:10px;
-  border:1.5px solid #e7e9ef;
+  padding:14px 16px;
+  border-radius:12px;
+  border:1.5px solid var(--input-border);
   background:#fff;
   outline:none;
   font-size:15px;
   color:#333;
-  transition: box-shadow .12s ease, border-color .12s ease;
+  transition: box-shadow .14s ease, border-color .14s ease, transform .08s ease;
+  box-shadow: 0 2px 0 rgba(20,24,40,0.02) inset;
 }
-.register-form input::placeholder{ color:#bfc6d8; }
-.register-form input:focus{
-  border-color: rgba(111,91,209,0.9);
-  box-shadow: 0 6px 18px rgba(111,91,209,0.08);
+.register-form input::placeholder{ color:#c7cfe1; }
+.register-form input:focus,
+.register-form select:focus,
+.register-form textarea:focus{
+  border-color: rgba(111,91,209,0.95);
+  box-shadow: 0 18px 40px rgba(111,91,209,0.08);
+  transform: translateY(-1px);
 }
 
-/* location fieldset */
-.register-form .location{
-  border: none;
-  padding: 0;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
+/* Multi-select visual improvements */
+.register-form select[multiple]{
+  min-height:120px;
+  padding:8px;
+  border-radius:12px;
+  background:#fff;
+  border:1.5px solid var(--input-border);
+  box-shadow:none;
+  font-size:15px;
+}
+
+/* Location block (card inside card) */
+.location{
   margin-top:4px;
+  border-radius:12px;
+  background:#fbfdff;
+  padding:16px;
+  border:1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 6px 24px rgba(20,24,40,0.03) inset;
 }
-.register-form .location legend{
-  font-size:13px;
-  font-weight:600;
-  color:#25304b;
-  margin-bottom:6px;
+.location input{
+  border-radius:10px;
+  margin-top:10px;
 }
 
-/* actions */
+/* Actions row */
 .actions{
   display:flex;
-  flex-direction:column;
-  gap:10px;
-  margin-top:6px;
+  gap:12px;
+  margin-top:8px;
+  align-items:center;
+  flex-wrap:wrap;
+  justify-content:flex-start;
 }
-
-/* primary button */
 .btn-primary{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  padding:12px 14px;
-  border-radius:10px;
+  padding:12px 22px;
+  border-radius:12px;
   border:0;
   color:white;
   font-weight:700;
   font-size:15px;
   cursor:pointer;
   background: linear-gradient(90deg, var(--bg-1), var(--bg-2));
-  box-shadow: 0 6px 20px rgba(51,56,96,0.12);
+  box-shadow: 0 18px 40px rgba(111,91,209,0.18);
 }
-
-/* secondary link styled as button */
-.btn-secondary{
-  display:inline-block;
-  text-align:center;
-  padding:10px 12px;
-  border-radius:10px;
-  background:#eef1f4;
+.btn-ghost{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 16px;
+  border-radius:12px;
+  background:#f7f9ff;
   color:#23304a;
-  text-decoration:none;
   font-weight:600;
+  text-decoration:none;
+  border:1px solid rgba(0,0,0,0.03);
 }
-
-/* simple back button */
-.backbutton{
-  padding:10px 12px;
-  border-radius:10px;
+.btn-back{
+  padding:10px 14px;
+  border-radius:12px;
   background:transparent;
   border:1px solid rgba(0,0,0,0.06);
   color:#23304a;
   cursor:pointer;
 }
 
-/* make inputs and buttons full width on wider layouts too */
-.actions .btn-primary,
-.actions .btn-secondary,
-.backbutton{
-  width:100%;
-}
-
-/* small helper text */
-.register-form .helper{
+/* small text */
+.register-form .small{
   font-size:13px;
   color:var(--muted);
-  text-align:center;
-  margin-top:6px;
 }
 
-/* responsive tweaks */
-@media (min-width:780px){
-  .register-form .location{
-    flex-direction:row;
-  }
-  .register-form .location input{ flex:1; }
-  .register-form .location input:first-child{ flex:2; } /* house field slightly larger */
+/* Responsive adjustments */
+@media (max-width:1100px){
+  .page{ grid-template-columns: 1fr minmax(360px, 700px); padding:24px; }
+  .page::after{ left:4%; width:52%; opacity:0.11; }
+  .card{ max-width:700px; }
+  .card-header{ height:180px; padding:26px 20px; }
+  .avatar{ width:72px; height:72px; font-size:26px; }
+  .card > form.register-form{ margin:-28px 16px 20px; padding:22px; width: calc(100% - 44px); max-width:620px; }
+  .row{ gap:16px; }
 }
-
-/* accessibility focus */
-.btn-primary:focus,
-.btn-secondary:focus,
-.backbutton:focus,
-.register-form input:focus{
-  outline: 3px solid rgba(111,91,209,0.12);
-  outline-offset: 2px;
+@media (max-width:860px){
+  .page{ grid-template-columns: 1fr; padding:18px; gap:18px; }
+  .page::after{ display:none; } /* hide decorative svg on very small screens */
+  .card-wrap{ order:1; }
+  .row{ flex-direction:column; gap:12px; }
+  .card{ width:100%; max-width:720px; }
+  .card-header{ height:160px; padding:18px; }
+  .card > form.register-form{ margin:-20px 12px 18px; padding:18px; width: calc(100% - 32px); max-width:680px; }
+  .actions{ justify-content:center; }
 }
