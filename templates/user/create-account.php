@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../../public/css/submit-button.css">
 
   <!-- page-specific CSS -->
-  <link rel="stylesheet" href="../user/css/account.css">
+  <link rel="stylesheet" href="../user/css/account.css?v=<?php echo filemtime(__DIR__.'/css/account.css'); ?>">
 
   <!-- fonts & icons -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -28,52 +28,70 @@
           <p class="lead">Add a new user to the system</p>
         </header>
 
-        <form action="../../src/Controllers/UserController.php" method="post" class="register-form" novalidate>
+        <form action="../../src/Controllers/UserController.php" method="post" class="register-form" id="createForm" novalidate>
           <input type="hidden" name="action" value="register">
 
           <div class="row">
             <div class="col">
-              <label for="user-name">Name</label>
-              <input type="text" id="user-name" name="user-name" placeholder="John" required>
+              <label for="user-name">Name <span class="req">*</span></label>
+              <div class="input with-icon">
+                <input type="text" id="user-name" name="user-name" placeholder="John" required>
+              </div>
             </div>
             <div class="col">
-              <label for="user-email">Email</label>
-              <input type="email" id="user-email" name="user-email" placeholder="john@gmail.com" required>
+              <label for="user-email">Email <span class="req">*</span></label>
+              <div class="input with-icon">
+                <input type="email" id="user-email" name="user-email" placeholder="john@gmail.com" required>
+              </div>
             </div>
           </div>
 
           <div class="row">
             <div class="col">
-              <label for="user-phone">Phone</label>
-              <input type="tel" id="user-phone" name="user-phone" placeholder="1234567890" pattern="[0-9]{10}" required>
+              <label for="user-phone">Phone <span class="req">*</span></label>
+              <div class="input with-icon">
+                <input type="tel" id="user-phone" name="user-phone" placeholder="1234567890" pattern="[0-9]{10}" required>
+              </div>
             </div>
             <div class="col">
-              <label for="pincode">Postal code</label>
-              <input type="number" id="pincode" name="pincode" placeholder="Postal code" required>
+              <label for="pincode">Postal code <span class="req">*</span></label>
+              <div class="input with-icon">
+                <input type="number" id="pincode" name="pincode" placeholder="Postal code" required>
+              </div>
             </div>
           </div>
 
           <fieldset class="location" aria-label="Location details">
-            <legend class="sr-only">Location Details</legend>
+            <legend>Location</legend>
             <label class="sr-only" for="house">House</label>
-            <input type="text" name="house" id="house" placeholder="House no. and name" required>
-            <input type="text" name="street" id="street" placeholder="Street name" required>
-            <input type="text" name="city" id="city" placeholder="City name" required>
+            <div class="input"><input type="text" name="house" id="house" placeholder="House no. and name" required></div>
+            <div class="input"><input type="text" name="street" id="street" placeholder="Street name" required></div>
+            <div class="input"><input type="text" name="city" id="city" placeholder="City name" required></div>
           </fieldset>
 
           <div class="row">
             <div class="col">
-              <label for="user-password">Password</label>
-              <input type="password" id="user-password" name="user-password" placeholder="Create a strong password" required>
+              <label for="user-password">Password <span class="req">*</span></label>
+              <div class="input with-icon">
+                <input type="password" id="user-password" name="user-password" placeholder="Create a strong password" required>
+                <button class="toggle-pass" type="button" aria-label="Show password" data-target="user-password"></i></button>
+              </div>
             </div>
             <div class="col">
-              <label for="confirm-password">Confirm</label>
-              <input type="password" id="confirm-password" name="confirm-password" placeholder="Enter password again" required>
+              <label for="confirm-password">Confirm <span class="req">*</span></label>
+              <div class="input with-icon">
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="Enter password again" required>
+                <button class="toggle-pass" type="button" aria-label="Show password" data-target="confirm-password"></button>
+              </div>
+              <p class="hint" id="matchHint"></p>
             </div>
           </div>
 
           <div class="actions">
-            <button type="submit" class="btn-primary" id="submit" name="submit">Create account</button>
+            <button type="submit" class="btn-primary" id="submit" name="submit">
+              <span>Create account</span>
+              <span class="loading" aria-hidden="true" style="display:none"><i class="fa-solid fa-circle-notch fa-spin"></i></span>
+            </button>
             <a class="btn-ghost" href="../user/user-signin.php">Have an account already? Login</a>
             <button type="button" class="btn-back" onclick="history.back()">← Back</button>
           </div>
