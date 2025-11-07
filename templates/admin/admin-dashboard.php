@@ -58,8 +58,10 @@ $pendingRequests   = count_rows($conn, 'service_request', "Status='Pending'");
             <button onclick="window.location.href='../../public/index.php'" class="btn back">
                 <i class="fas fa-arrow-left"></i> Back to Home
             </button>
-            <form action="../includes/logout.php" method="POST">
-                <button class="btn logout" name="logout"><i class="fas fa-right-from-bracket"></i> Logout</button>
+           <form action="../includes/logout.php" method="POST">
+                <button class="btn logout" name="logout">
+                     <i class="fas fa-right-from-bracket"></i> Logout
+                </button>
             </form>
         </div>
     </aside>
