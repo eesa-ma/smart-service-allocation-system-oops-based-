@@ -31,12 +31,12 @@ class TechnicianController {
 
     public function updateTaskStatus() {
     
-    if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'technician') {
-        echo "<script>alert('Unauthorized access'); window.location.href='../../templates/technician/technician-signin.php';</script>";
-        exit;
-    }
+        if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'technician') {
+            echo "<script>alert('Unauthorized access'); window.location.href='../../templates/technician/technician-signin.php';</script>";
+            exit;
+        }
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $requestId = $_POST['request_id'];
             $status = $_POST['status'];
             $technicianId = $_SESSION['id'];
@@ -53,9 +53,19 @@ class TechnicianController {
     }
 }
 
-// Route the request
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'toggle_availability') {
+// ROUTER - Handle incoming requests
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $controller = new TechnicianController();
-    $controller->toggleAvailability();
+    
+    if (isset($_POST['action'])) {
+        // Toggle availability
+        if ($_POST['action'] === 'toggle_availability') {
+            $controller->toggleAvailability();
+        }
+        // Update task status
+        elseif ($_POST['action'] === 'update_status') {
+            $controller->updateTaskStatus();
+        }
+    }
 }
 ?>
