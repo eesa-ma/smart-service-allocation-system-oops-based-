@@ -32,5 +32,33 @@ Class Technician {
             return false;
         }
     }
+
+    // ADD THIS METHOD TO YOUR EXISTING Technician CLASS
+
+    public function getAvailableTechniciansByLocation($location) {
+        $sql = "SELECT Technician_ID, Name, Skills 
+                FROM technician 
+                WHERE Availability_Status = 1 
+                AND Location LIKE ?
+                ORDER BY Name";
+        
+        $stmt = mysqli_prepare($this->conn, $sql);
+        
+        $technicians = [];
+        if ($stmt) {
+            $searchLocation = "%{$location}%";
+            mysqli_stmt_bind_param($stmt, "s", $searchLocation);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            
+            while ($row = mysqli_fetch_assoc($result)) {
+                $technicians[] = $row;
+            }
+            
+            mysqli_stmt_close($stmt);
+        }
+        
+        return $technicians;
+    }
 }
 ?>

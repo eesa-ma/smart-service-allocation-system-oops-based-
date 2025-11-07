@@ -24,5 +24,59 @@
                 return false;
             }
         }
+        
+    // ADD THESE METHODS TO YOUR EXISTING ServiceRequest CLASS
+
+        public function assignTechnician($request_id, $technician_id) {
+            $sql = "UPDATE service_request 
+                    SET Technician_ID = ?, Status = 'Assigned' 
+                    WHERE Request_ID = ?";
+            
+            $stmt = mysqli_prepare($this->conn, $sql);
+            
+            if ($stmt) {
+                mysqli_stmt_bind_param($stmt, "ii", $technician_id, $request_id);
+                $result = mysqli_stmt_execute($stmt);
+                mysqli_stmt_close($stmt);
+                return $result;
+            }
+            
+            return false;
+        }
+
+        public function deleteRequest($request_id) {
+            $sql = "DELETE FROM service_request WHERE Request_ID = ?";
+            
+            $stmt = mysqli_prepare($this->conn, $sql);
+            
+            if ($stmt) {
+                mysqli_stmt_bind_param($stmt, "i", $request_id);
+                $result = mysqli_stmt_execute($stmt);
+                mysqli_stmt_close($stmt);
+                return $result;
+            }
+            
+            return false;
+        }
+
+        public function getPendingAndRejectedRequests() {
+            $sql = "SELECT sr.Request_ID, u.name, sr.Description, sr.Location, 
+                        sr.Technician_ID, sr.Status
+                    FROM service_request sr 
+                    JOIN user u ON sr.User_ID = u.user_ID
+                    WHERE sr.Status IN ('Pending', 'Rejected')
+                    ORDER BY sr.Request_ID DESC";
+            
+            $result = mysqli_query($this->conn, $sql);
+            
+            $requests = [];
+            if ($result && mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $requests[] = $row;
+                }
+            }
+            
+            return $requests;
+        }
     }
 ?>

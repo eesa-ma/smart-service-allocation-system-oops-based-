@@ -1,9 +1,12 @@
 <?php
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
     include __DIR__ . '/../Core/Database.php';
     include __DIR__ . '/../Model/Admin.php';
     include __DIR__ . '/../Model/Technician.php';
+    include __DIR__ . '/../Model/ServiceRequest.php';  // Add this line
 
     class AdminController {
         private $conn;
@@ -50,7 +53,6 @@
 
                 $technician->name = $_POST["tech-name"];
                 
-                // Handle multiple skills - convert array to comma-separated string
                 if (isset($_POST["tech-skill"]) && is_array($_POST["tech-skill"])) {
                     $technician->skills = implode(", ", $_POST["tech-skill"]);
                 } else {
@@ -73,15 +75,101 @@
                 }
             }
         }
+
+        // NEW METHODS FOR MANAGE SERVICE
+
+        public function assignTechnician() {
+            if (!isset($_SESSION['Admin_ID'])) {
+                header('Location: ../../templates/admin/admin-signin.php');
+                exit();
+            }
+
+            $request_id = filter_input(INPUT_POST, 'request_id', FILTER_VALIDATE_INT);
+            $technician_id = filter_input(INPUT_POST, 'technician_id', FILTER_VALIDATE_INT);
+
+            if (!$request_id || !$technician_id) {
+                $_SESSION['message'] = 'Invalid request or technician ID.';
+                header('Location: ../../templates/admin/manage-service.php');
+                exit();
+            }
+
+            $serviceRequest = new ServiceRequest($this->conn);
+            
+            if ($serviceRequest->assignTechnician($request_id, $technician_id)) {
+                $_SESSION['message'] = 'Technician assigned successfully.';
+            } else {
+                $_SESSION['message'] = 'Failed to assign technician.';
+            }
+
+            header('Location: ../../templates/admin/manage-service.php');
+            exit();
+        }
+
+        public function deleteRequest() {
+            if (!isset($_SESSION['Admin_ID'])) {
+                header('Location: ../../templates/admin/admin-signin.php');
+                exit();
+            }
+
+            $request_id = filter_input(INPUT_POST, 'request_id', FILTER_VALIDATE_INT);
+
+            if (!$request_id) {
+                $_SESSION['message'] = 'Invalid request ID.';
+                header('Location: ../../templates/admin/manage-service.php');
+                exit();
+            }
+
+            $serviceRequest = new ServiceRequest($this->conn);
+            
+            if ($serviceRequest->deleteRequest($request_id)) {
+                $_SESSION['message'] = 'Request deleted successfully.';
+            } else {
+                $_SESSION['message'] = 'Failed to delete request.';
+            }
+
+            header('Location: ../../templates/admin/manage-service.php');
+            exit();
+        }
+
+        public function getPendingRequests() {
+            if (!isset($_SESSION['Admin_ID'])) {
+                header('Location: ../../templates/admin/admin-signin.php');
+                exit();
+            }
+
+            $serviceRequest = new ServiceRequest($this->conn);
+            return $serviceRequest->getPendingAndRejectedRequests();
+        }
+
+        public function getAvailableTechnicians($location) {
+            if (!isset($_SESSION['Admin_ID'])) {
+                return [];
+            }
+
+            $technician = new Technician($this->conn);
+            return $technician->getAvailableTechniciansByLocation($location);
+        }
     }
 
-    if (isset($_POST['action']) && $_POST['action'] == 'signin') {
+    // UPDATED ACTION HANDLER
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $adminController = new AdminController();
-        $adminController->signin();
+        
+        switch ($_POST['action']) {
+            case 'signin':
+                $adminController->signin();
+                break;
+            case 'addtechnician':
+                $adminController->AddTechnician();
+                break;
+            case 'assign_technician':
+                $adminController->assignTechnician();
+                break;
+            case 'delete_request':
+                $adminController->deleteRequest();
+                break;
+            default:
+                echo "<script>alert('Invalid action'); window.history.back();</script>";
+        }
     }
-
-    if (isset($_POST['action']) && $_POST['action'] == 'addtechnician') {
-    $adminController = new AdminController();
-    $adminController->AddTechnician();
-}
 ?>
