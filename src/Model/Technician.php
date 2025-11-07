@@ -60,27 +60,5 @@ Class Technician {
         
         return $technicians;
     }
-
-    // Add this method to your existing Technician class
-
-    public function toggleAvailabilityStatus($technicianId) {
-        // Get current status
-        $query = "SELECT Availability_Status FROM technician WHERE Technician_ID = '$technicianId'";
-        $result = mysqli_query($this->conn, $query);
-        
-        if ($row = mysqli_fetch_assoc($result)) {
-            // Toggle: 1 -> 0 or 0 -> 1
-            $newStatus = ($row['Availability_Status'] == '1') ? '0' : '1';
-            
-            // Update database
-            $updateQuery = "UPDATE technician SET Availability_Status = '$newStatus' WHERE Technician_ID = '$technicianId'";
-            
-            if (mysqli_query($this->conn, $updateQuery)) {
-                return $newStatus;
-            }
-        }
-        
-        return 'error';
-    }
 }
 ?>

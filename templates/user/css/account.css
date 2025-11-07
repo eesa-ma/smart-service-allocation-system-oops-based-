@@ -1,43 +1,191 @@
-header>h1 {
-    text-align: center;
+:root{
+  --bg-1: #6ea1ff;
+  --bg-2: #7750b6;
+  --card-width: 480px;
+  --radius: 12px;
+  --muted: #8a8fa6;
+  --surface: #ffffff;
 }
 
-main {
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-}
-a {
-    color: #007bff;
-    text-decoration: none;
-}
+/* Reset basics */
+*{ box-sizing: border-box; }
+html,body{ height:100%; margin:0; font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; color:#222; }
 
-a:hover {
-    text-decoration: underline;
-}
+/* Page background (match the purple-blue gradient + faint pattern from the reference) */
 body{
-    background-image: url('/smart-sevice-allocation-system/public/images/all.png'); 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    position: relative;
+  background:
+    radial-gradient(1200px 600px at 10% 20%, rgba(255,255,255,0.03), transparent 10%),
+    radial-gradient(900px 500px at 90% 80%, rgba(0,0,0,0.04), transparent 10%),
+    linear-gradient(135deg, var(--bg-1) 0%, #8f61d0 100%);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px 20px;
 }
 
-h1{
-    color:#333333;
+/* header: if global header exists, keep minimal override */
+header h1{
+  position: absolute;
+  top: 18px;
+  left: 22px;
+  margin:0;
+  color: rgba(255,255,255,0.95);
+  font-weight:600;
+  font-size:16px;
+  opacity:0.95;
+  user-select:none;
 }
-.backbutton {
-    width: 35%;
-    padding: 10px;
-    background-color: red;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
+
+/* Center card wrapper */
+.create-form .card{
+  width:100%;
+  max-width:var(--card-width);
+  background: var(--surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(39,44,69,0.25), 0 2px 6px rgba(0,0,0,0.08);
 }
-.backbutton:hover{
-    background: darkred;
+
+/* Header with gradient */
+.card-header{
+  background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+  color: #fff;
+  padding: 28px 22px;
+  text-align:center;
+}
+.card-header h2{ margin:0; font-size:22px; font-weight:700; }
+.card-header .lead{ margin:8px 0 0; font-size:13px; opacity:0.95; font-weight:400; }
+
+/* Body */
+.card-body{ padding: 22px; }
+
+/* form layout: vertical, mobile-first */
+.register-form{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+/* labels and inputs */
+.register-form label{
+  font-size:13px;
+  font-weight:600;
+  color:#25304b;
+  margin-bottom:4px;
+}
+.register-form input[type="text"],
+.register-form input[type="email"],
+.register-form input[type="tel"],
+.register-form input[type="number"],
+.register-form input[type="password"]{
+  width:100%;
+  padding:12px 14px;
+  border-radius:10px;
+  border:1.5px solid #e7e9ef;
+  background:#fff;
+  outline:none;
+  font-size:15px;
+  color:#333;
+  transition: box-shadow .12s ease, border-color .12s ease;
+}
+.register-form input::placeholder{ color:#bfc6d8; }
+.register-form input:focus{
+  border-color: rgba(111,91,209,0.9);
+  box-shadow: 0 6px 18px rgba(111,91,209,0.08);
+}
+
+/* location fieldset */
+.register-form .location{
+  border: none;
+  padding: 0;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:4px;
+}
+.register-form .location legend{
+  font-size:13px;
+  font-weight:600;
+  color:#25304b;
+  margin-bottom:6px;
+}
+
+/* actions */
+.actions{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:6px;
+}
+
+/* primary button */
+.btn-primary{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px 14px;
+  border-radius:10px;
+  border:0;
+  color:white;
+  font-weight:700;
+  font-size:15px;
+  cursor:pointer;
+  background: linear-gradient(90deg, var(--bg-1), var(--bg-2));
+  box-shadow: 0 6px 20px rgba(51,56,96,0.12);
+}
+
+/* secondary link styled as button */
+.btn-secondary{
+  display:inline-block;
+  text-align:center;
+  padding:10px 12px;
+  border-radius:10px;
+  background:#eef1f4;
+  color:#23304a;
+  text-decoration:none;
+  font-weight:600;
+}
+
+/* simple back button */
+.backbutton{
+  padding:10px 12px;
+  border-radius:10px;
+  background:transparent;
+  border:1px solid rgba(0,0,0,0.06);
+  color:#23304a;
+  cursor:pointer;
+}
+
+/* make inputs and buttons full width on wider layouts too */
+.actions .btn-primary,
+.actions .btn-secondary,
+.backbutton{
+  width:100%;
+}
+
+/* small helper text */
+.register-form .helper{
+  font-size:13px;
+  color:var(--muted);
+  text-align:center;
+  margin-top:6px;
+}
+
+/* responsive tweaks */
+@media (min-width:780px){
+  .register-form .location{
+    flex-direction:row;
+  }
+  .register-form .location input{ flex:1; }
+  .register-form .location input:first-child{ flex:2; } /* house field slightly larger */
+}
+
+/* accessibility focus */
+.btn-primary:focus,
+.btn-secondary:focus,
+.backbutton:focus,
+.register-form input:focus{
+  outline: 3px solid rgba(111,91,209,0.12);
+  outline-offset: 2px;
 }
