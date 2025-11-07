@@ -25,7 +25,7 @@
         
         <nav class="sidebar-nav">
             <ul>
-                <li><a href="../../public/index.php"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
                 <li><a href="../user/request-service.php"><i class="fas fa-plus-circle"></i> Request a Service</a></li>
                 <li><a href="../user/track-service.php"><i class="fas fa-search"></i> Track Service Status</a></li>
                 <li><a href="../user/user-feedback.php"><i class="fas fa-star"></i> Rating & Feedback</a></li>
