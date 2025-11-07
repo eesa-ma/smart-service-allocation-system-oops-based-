@@ -115,5 +115,23 @@
             }
             return false;
         }
+
+        public function getUserServiceRequests($userId) {
+            $query = "SELECT Request_ID, Description, Status, Location 
+                    FROM service_request 
+                    WHERE User_ID = '$userId' 
+                    ORDER BY Request_ID DESC";
+            
+            $result = mysqli_query($this->conn, $query);
+            
+            $requests = [];
+            if ($result) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $requests[] = $row;
+                }
+            }
+            
+            return $requests;
+        }
     }
 ?>
