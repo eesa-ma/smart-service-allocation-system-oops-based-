@@ -34,5 +34,26 @@ class User
         }
         return false;
     }
+
+    public function verifyEmail($email) {
+        $query = "SELECT User_ID, Name, Email FROM user WHERE Email = '$email'";
+        $result = mysqli_query($this->conn, $query);
+        
+        if ($result && mysqli_num_rows($result) == 1) {
+            return mysqli_fetch_assoc($result);
+        }
+        
+        return false;
+    }
+
+    public function resetPassword($email, $newPassword) {
+        $query = "UPDATE user SET Password = '$newPassword' WHERE Email = '$email'";
+        
+        if (mysqli_query($this->conn, $query)) {
+            return true;
+        }
+        
+        return false;
+    }
 }
 ?>
