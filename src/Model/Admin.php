@@ -17,5 +17,26 @@ class Admin {
         return false;
     }
 
+    public function verifyAdminId($adminId) {
+        $query = "SELECT Admin_ID FROM admin WHERE Admin_ID = '$adminId'";
+        $result = mysqli_query($this->conn, $query);
+        
+        if ($result && mysqli_num_rows($result) == 1) {
+            return mysqli_fetch_assoc($result);
+        }
+        
+        return false;
+    }
+
+     public function resetPassword($adminId, $newPassword) {
+        $query = "UPDATE admin SET Password = '$newPassword' WHERE Admin_ID = '$adminId'";
+        
+        if (mysqli_query($this->conn, $query)) {
+            return true;
+        }
+        
+        return false;
+    }
+
 }
 ?>

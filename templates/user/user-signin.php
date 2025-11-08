@@ -50,7 +50,7 @@
                 </div>
                 
                 <div class="form-footer">
-                    <a href="../user/user-verify.php" class="forgot-link">
+                    <a href="verify-email.php" class="forgot-link">
                         <i class="fas fa-question-circle"></i>
                         Forgot your password?
                     </a>

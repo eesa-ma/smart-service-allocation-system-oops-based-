@@ -49,7 +49,7 @@
                 </div>
                 
                 <div class="form-footer">
-                    <a href="../admin/verify-admin.php" class="forgot-link">
+                    <a href="verify-admin-id.php" class="forgot-link">
                         <i class="fas fa-question-circle"></i>
                         Forgot your password?
                     </a>

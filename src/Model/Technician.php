@@ -33,7 +33,6 @@ Class Technician {
         }
     }
 
-    // Add this method to your existing Technician class
 
     public function toggleAvailabilityStatus($technicianId) {
     // Get current status
@@ -54,8 +53,6 @@ Class Technician {
         
         return 'error';
     }
-
-    // ADD THIS METHOD TO YOUR EXISTING Technician CLASS
 
     public function getAvailableTechniciansByLocation($location) {
     
@@ -82,6 +79,28 @@ Class Technician {
         }
         
         return $technicians;
+    }
+    
+
+    public function verifyEmail($email) {
+        $query = "SELECT Technician_ID, Name, Email FROM technician WHERE Email = '$email'";
+        $result = mysqli_query($this->conn, $query);
+        
+        if ($result && mysqli_num_rows($result) == 1) {
+            return mysqli_fetch_assoc($result);
+        }
+        
+        return false;
+    }
+
+    public function resetPassword($email, $newPassword) {
+        $query = "UPDATE technician SET Password = '$newPassword' WHERE Email = '$email'";
+        
+        if (mysqli_query($this->conn, $query)) {
+            return true;
+        }
+        
+        return false;
     }
 }
 ?>
