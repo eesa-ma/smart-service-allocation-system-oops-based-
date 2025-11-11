@@ -91,7 +91,7 @@ $requests = $adminController->getPendingRequests();
                                     </form>
                                 </td>
                                 <td class='action-cell'>
-                                    <form method='post' action='../../src/Controllers/AdminController.php' class='delete-form' onsubmit="return confirm('Delete this request?')" style='display:inline'>
+                                    <form method='post' action='../../src/Controllers/AdminController.php' class='delete-form' onsubmit="return confirm('Are you sure you want to delete this request?')" style='display:inline'>
                                         <input type='hidden' name='action' value='delete_request'>
                                         <input type='hidden' name='request_id' value='<?php echo $row['Request_ID']; ?>'>
                                         <button type='submit' class='btn btn-delete' title='Delete Request'>
