@@ -99,21 +99,21 @@
         }
 
         public function updateTaskStatus($requestId, $technicianId, $status) {
-            $query = "UPDATE service_request 
-                    SET Status = '$status' 
-                    WHERE Request_ID = '$requestId' 
-                    AND Technician_ID = '$technicianId'";
-            
-            if (mysqli_query($this->conn, $query)) {
-                if ($status === 'Rejected') {
-                    $clearQuery = "UPDATE service_request 
-                                SET Technician_ID = NULL 
-                                WHERE Request_ID = '$requestId'";
-                    mysqli_query($this->conn, $clearQuery);
-                }
-                return true;
+            // If technician rejects, send request back to admin pool
+            if ($status === 'Rejected') {
+                $query = "UPDATE service_request 
+                          SET Status = 'Pending', Technician_ID = NULL 
+                          WHERE Request_ID = '$requestId' 
+                          AND Technician_ID = '$technicianId'";
+                return mysqli_query($this->conn, $query) ? true : false;
             }
-            return false;
+
+            // For other statuses, just update the status for this technician's task
+            $query = "UPDATE service_request 
+                      SET Status = '$status' 
+                      WHERE Request_ID = '$requestId' 
+                      AND Technician_ID = '$technicianId'";
+            return mysqli_query($this->conn, $query) ? true : false;
         }
 
         public function getUserServiceRequests($userId) {

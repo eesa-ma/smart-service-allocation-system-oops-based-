@@ -106,7 +106,7 @@ $pendingRequests   = count_rows($conn, 'service_request', "Status='Pending'");
             <h2>Quick Actions</h2>
             <div class="actions-grid">
                 <a class="action" href="../admin/Add-technician.php"><i class="fas fa-user-plus"></i> Add Technician</a>
-                <a class="action" href="../admin/service-manage.php"><i class="fas fa-screwdriver-wrench"></i> Manage Services</a>
+                <a class="action" href="../admin/manage-service.php"><i class="fas fa-screwdriver-wrench"></i> Manage Services</a>
                 <a class="action" href="../admin/track-service.php"><i class="fas fa-route"></i> Track Requests</a>
                 <a class="action" href="../admin/admin-feedback.php"><i class="fas fa-comment-dots"></i> Review Feedbacks</a>
             </div>
