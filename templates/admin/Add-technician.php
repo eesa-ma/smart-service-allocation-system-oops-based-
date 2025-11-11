@@ -16,6 +16,7 @@
                 <p class="header-subtitle">Add a new technician to the system</p>
             </div>
 
+            <!-- Removed novalidate so browser will enforce required/pattern/email checks -->
             <form action="../../src/Controllers/AdminController.php" method="POST" class="technician-form" id="techForm">
                 <input type="hidden" name="action" value="addtechnician">
                 <input type="hidden" name="submit" value="1">
@@ -107,12 +108,17 @@
                             <i class="fas fa-phone"></i>
                             Phone Number
                         </label>
+                        <!-- pattern, inputmode and maxlength to help enforce 10-digit numeric input on client -->
                         <input 
                             type="tel" 
                             id="tech-phone" 
                             name="tech-phone" 
                             placeholder="10-digit mobile number"
-                            required>
+                            pattern="\d{10}"
+                            inputmode="numeric"
+                            maxlength="10"
+                            required
+                            title="Enter a 10-digit phone number (digits only)">
                     </div>
                     <div class="form-group">
                         <label for="tech-mail">
@@ -175,16 +181,48 @@
     <script>
         const form = document.getElementById('techForm');
         const submitBtn = document.getElementById('submitBtn');
-        
+
+        function showSpinner() {
+            const textSpan = submitBtn.querySelector('span:first-of-type');
+            const spinner = submitBtn.querySelector('.loading-spinner');
+            if (textSpan) textSpan.style.display = 'none';
+            if (spinner) spinner.style.display = 'inline-block';
+            submitBtn.disabled = true;
+        }
+
         if (form && submitBtn) {
             form.addEventListener('submit', function(e) {
-                // Don't prevent default - let form submit normally
-                const textSpan = submitBtn.querySelector('span:first-of-type');
-                const spinner = submitBtn.querySelector('.loading-spinner');
-                
-                if (textSpan) textSpan.style.display = 'none';
-                if (spinner) spinner.style.display = 'inline-block';
-                submitBtn.disabled = true;
+                // First let the browser validate required/email/pattern/etc.
+                if (!form.checkValidity()) {
+                    // Prevent submission and show native validation messages
+                    e.preventDefault();
+                    form.reportValidity(); // shows messages in modern browsers
+                    return;
+                }
+
+                // Custom validation: phone must be exactly 10 digits
+                const phone = document.getElementById('tech-phone').value.trim();
+                const phoneRe = /^\d{10}$/;
+                if (!phoneRe.test(phone)) {
+                    e.preventDefault();
+                    alert('Please enter a valid 10-digit phone number (digits only).');
+                    document.getElementById('tech-phone').focus();
+                    return;
+                }
+
+                // Custom validation: password confirmation
+                const pass = document.getElementById('technician-password').value;
+                const confirm = document.getElementById('confirm-password').value;
+                if (pass !== confirm) {
+                    e.preventDefault();
+                    alert('Passwords do not match.');
+                    document.getElementById('confirm-password').focus();
+                    return;
+                }
+
+                // All checks passed -> show spinner and allow form to submit
+                showSpinner();
+                // allow normal submit to continue
             });
         }
     </script>
