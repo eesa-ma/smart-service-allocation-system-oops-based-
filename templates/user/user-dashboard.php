@@ -52,9 +52,6 @@ foreach($requests as $r){
         </nav>
         
         <div class="sidebar-footer">
-            <button type="button" onclick="window.location.href='../../public/index.php'" class="btn-back">
-                <i class="fas fa-arrow-left"></i> Back
-            </button>
             <form action="../includes/logout.php" method="POST">
                 <button class="btn-logout" name="logout">
                     <i class="fas fa-right-from-bracket"></i> Logout

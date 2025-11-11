@@ -65,9 +65,6 @@ $currentStatus = $statusData['Availability_Status'] ?? '0';
             </ul>
         </nav>
         <div class="sidebar-actions">
-            <button onclick="window.location.href='../../public/index.php'" class="btn back">
-                <i class="fas fa-arrow-left"></i> Back to Home
-            </button>
             <form action="../includes/logout.php" method="POST">
                 <button class="btn logout" name="logout">
                      <i class="fas fa-right-from-bracket"></i> Logout
