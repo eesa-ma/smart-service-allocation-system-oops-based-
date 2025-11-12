@@ -23,12 +23,26 @@ Class Technician {
     }
 
     public function createAccount() {
+        // Check if email already exists
+        $existingTechnician = $this->findByEmail($this->email);
+        if ($existingTechnician) {
+            return "email_exists";
+        }
+        
+        // Check if phone number already exists
+        $phoneCheck = "SELECT * FROM technician WHERE Phone_No = '$this->phoneno'";
+        $result = mysqli_query($this->conn, $phoneCheck);
+        if ($result && mysqli_num_rows($result) > 0) {
+            return "phone_exists";
+        }
+        
         $sql = "INSERT INTO technician (Name, Skills, Location, Phone_No, Email, Password)
         VALUES ('$this->name','$this->skills','$this->address','$this->phoneno','$this->email','$this->password')";
         
         if (mysqli_query($this->conn, $sql)) {
             return true;
         } else {
+            error_log("Technician account creation error: " . mysqli_error($this->conn));
             return false;
         }
     }

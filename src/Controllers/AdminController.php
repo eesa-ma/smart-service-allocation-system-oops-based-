@@ -1,4 +1,8 @@
 <?php
+    // Enable error reporting for debugging
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
@@ -51,27 +55,36 @@
 
                 $technician = new Technician($this->conn);
 
-                $technician->name = $_POST["tech-name"];
+                $technician->name = mysqli_real_escape_string($this->conn, trim($_POST["tech-name"]));
                 
                 if (isset($_POST["tech-skill"]) && is_array($_POST["tech-skill"])) {
-                    $technician->skills = implode(", ", $_POST["tech-skill"]);
+                    $skills = array_map(function($skill) {
+                        return mysqli_real_escape_string($this->conn, trim($skill));
+                    }, $_POST["tech-skill"]);
+                    $technician->skills = implode(", ", $skills);
                 } else {
-                    $technician->skills = isset($_POST["tech-skill"]) ? $_POST["tech-skill"] : "";
+                    $technician->skills = isset($_POST["tech-skill"]) ? mysqli_real_escape_string($this->conn, trim($_POST["tech-skill"])) : "";
                 }
                 
-                $technician->email = $_POST["tech-mail"];
-                $technician->phoneno = $_POST["tech-phone"];
-                $house = $_POST["house"];
-                $street = $_POST["street"];
-                $city = $_POST["city"];
-                $pincode = $_POST["pincode"];
+                $technician->email = mysqli_real_escape_string($this->conn, trim($_POST["tech-mail"]));
+                $technician->phoneno = mysqli_real_escape_string($this->conn, trim($_POST["tech-phone"]));
+                $house = mysqli_real_escape_string($this->conn, trim($_POST["house"]));
+                $street = mysqli_real_escape_string($this->conn, trim($_POST["street"]));
+                $city = mysqli_real_escape_string($this->conn, trim($_POST["city"]));
+                $pincode = mysqli_real_escape_string($this->conn, trim($_POST["pincode"]));
                 $technician->address = "$house, $street, $city - $pincode";
-                $technician->password = $password;
+                $technician->password = mysqli_real_escape_string($this->conn, $password);
 
-                if ($technician->createAccount()) {
-                    echo "<script>alert('Account created successfully!'); window.location.href='../../templates/admin/admin-dashboard.php';</script>";
+                $result = $technician->createAccount();
+                
+                if ($result === true) {
+                    echo "<script>alert('Technician account created successfully!'); window.location.href='../../templates/admin/admin-dashboard.php';</script>";
+                } elseif ($result === "email_exists") {
+                    echo "<script>alert('Error: This email address is already registered. Please use a different email.'); window.history.back();</script>";
+                } elseif ($result === "phone_exists") {
+                    echo "<script>alert('Error: This phone number is already registered. Please use a different phone number.'); window.history.back();</script>";
                 } else {
-                    echo "<script>alert('Error: Could not create account.'); window.history.back();</script>";
+                    echo "<script>alert('Error: Could not create technician account. Please try again later.'); window.history.back();</script>";
                 }
             }
         }
