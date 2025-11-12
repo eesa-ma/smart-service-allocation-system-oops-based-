@@ -42,8 +42,8 @@ $requests = $adminController->getPendingRequests();
                         <p class="subtitle success-message"><?php echo htmlspecialchars($message); ?></p>
                     <?php endif; ?>
                 </div>
-            </div>
-            <button onclick="history.back()" class="btn-back">
+            </div>  
+            <button onclick="window.location.href='admin-dashboard.php'" class="btn-back">
                 <i class="fas fa-arrow-left"></i>
                 Back to Dashboard
             </button>

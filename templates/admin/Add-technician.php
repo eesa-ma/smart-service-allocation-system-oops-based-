@@ -162,7 +162,7 @@
                 </div>
 
                 <div class="form-actions">
-                    <button type="button" class="btn btn-back" onclick="history.back()">
+                    <button type="button" class="btn btn-back" onclick="window.location.href='admin-dashboard.php'">
                         <i class="fas fa-arrow-left"></i>
                         Back
                     </button>
