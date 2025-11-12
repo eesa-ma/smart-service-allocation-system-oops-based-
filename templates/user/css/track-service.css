@@ -180,6 +180,12 @@ body {
     transform: translateY(-2px);
 }
 
+
+.status-inprogress {
+    background: #cfe2ff;
+    color: #084298;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .header {

@@ -225,6 +225,11 @@ body {
     font-size: 1.2rem;
 }
 
+.status-inprogress {
+    background: #cfe2ff;
+    color: #084298;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .header {

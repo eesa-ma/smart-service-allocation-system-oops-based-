@@ -55,7 +55,14 @@ $requests = $serviceRequest->getAllServiceRequests();
                 <i class="fas fa-clock"></i>
                 <div>
                     <p>Pending</p>
-                    <h3><?php echo count(array_filter($requests, fn($r) => $r['Status'] == 'Pending')); ?></h3>
+                    <h3><?php echo count(array_filter($requests, fn($r) => $r['Status'] == 'Pending' || $r['Status'] == 'Rejected')); ?></h3>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-spinner"></i>
+                <div>
+                    <p>In Progress</p>
+                    <h3><?php echo count(array_filter($requests, fn($r) => $r['Status'] == 'Assigned' || $r['Status'] == 'Accepted')); ?></h3>
                 </div>
             </div>
             <div class="stat-card">
@@ -103,30 +110,41 @@ $requests = $serviceRequest->getAllServiceRequests();
                             <?php endif; ?>
                         </td>
                         <td>
-                            <span class="status-badge status-<?php echo strtolower($request['Status']); ?>">
-                                <?php 
-                                    $status = $request['Status'];
-                                    $icon = '';
-                                    switch(strtolower($status)) {
-                                        case 'pending':
-                                            $icon = 'fa-clock';
-                                            break;
-                                        case 'assigned':
-                                        case 'accepted':
-                                            $icon = 'fa-user-check';
-                                            break;
-                                        case 'completed':
-                                            $icon = 'fa-check-circle';
-                                            break;
-                                        case 'rejected':
-                                            $icon = 'fa-times-circle';
-                                            break;
-                                        default:
-                                            $icon = 'fa-info-circle';
-                                    }
-                                ?>
+                            <?php 
+                                $status = $request['Status'];
+                                $displayStatus = $status; // Default: show as-is
+                                $icon = '';
+                                
+                                // Transform status for display
+                                $statusLower = strtolower($status);
+                                
+                                switch($statusLower) {
+                                    case 'pending':
+                                        $icon = 'fa-clock';
+                                        $displayStatus = 'Pending';
+                                        break;
+                                    case 'assigned':
+                                    case 'accepted':
+                                        $icon = 'fa-spinner fa-spin';
+                                        $displayStatus = 'In Progress';
+                                        $statusLower = 'inprogress'; // for CSS class
+                                        break;
+                                    case 'completed':
+                                        $icon = 'fa-check-circle';
+                                        $displayStatus = 'Completed';
+                                        break;
+                                    case 'rejected':
+                                        $icon = 'fa-clock';
+                                        $displayStatus = 'Pending';
+                                        $statusLower = 'pending'; // for CSS class
+                                        break;
+                                    default:
+                                        $icon = 'fa-info-circle';
+                                }
+                            ?>
+                            <span class="status-badge status-<?php echo $statusLower; ?>">
                                 <i class="fas <?php echo $icon; ?>"></i>
-                                <?php echo htmlspecialchars($status); ?>
+                                <?php echo htmlspecialchars($displayStatus); ?>
                             </span>
                         </td>
                     </tr>
