@@ -29,7 +29,7 @@
             $adminData = $model->findbyAdminID($admin_ID);
 
             if($adminData) {
-                if($password == $adminData["Password"]) {
+                if(password_verify($password, $adminData["Password"])) {
                     session_regenerate_id(true);
                     $_SESSION["Admin_ID"] = $adminData["Admin_ID"]; 
 

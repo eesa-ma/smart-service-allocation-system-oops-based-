@@ -29,7 +29,8 @@ class Admin {
     }
 
      public function resetPassword($adminId, $newPassword) {
-        $query = "UPDATE admin SET Password = '$newPassword' WHERE Admin_ID = '$adminId'";
+        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+        $query = "UPDATE admin SET Password = '$hashedPassword' WHERE Admin_ID = '$adminId'";
         
         if (mysqli_query($this->conn, $query)) {
             return true;
