@@ -48,7 +48,7 @@ class AuthController
 
         // 3. Verify password and redirect
         if ($userData) {
-            if ($password == $userData["Password"]) {
+            if (password_verify($password, $userData["Password"])) {
                 // Harden session on successful login
                 if (session_status() === PHP_SESSION_ACTIVE) {
                     session_regenerate_id(true);
