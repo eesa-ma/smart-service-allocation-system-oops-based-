@@ -29,7 +29,7 @@
             $adminData = $model->findbyAdminID($admin_ID);
 
             if($adminData) {
-                if($password == $adminData["Password"]) {
+                if(password_verify($password, $adminData["Password"])) {
                     session_regenerate_id(true);
                     $_SESSION["Admin_ID"] = $adminData["Admin_ID"]; 
 
@@ -73,7 +73,8 @@
                 $city = mysqli_real_escape_string($this->conn, trim($_POST["city"]));
                 $pincode = mysqli_real_escape_string($this->conn, trim($_POST["pincode"]));
                 $technician->address = "$house, $street, $city - $pincode";
-                $technician->password = mysqli_real_escape_string($this->conn, $password);
+                // Hash technician password before storing
+                $technician->password = mysqli_real_escape_string($this->conn, password_hash($password, PASSWORD_DEFAULT));
 
                 $result = $technician->createAccount();
                 

@@ -55,9 +55,10 @@ public function resetPassword() {
                 exit;
             }
 
-            // Reset password
+            // Reset password with hashing
             $email = $_SESSION['reset_email'];
-            if ($this->user->resetPassword($email, $newPassword)) {
+            $hashed = password_hash($newPassword, PASSWORD_DEFAULT);
+            if ($this->user->resetPassword($email, $hashed)) {
                 // Clear session
                 unset($_SESSION['reset_email']);
                 echo "<script>alert('Password updated successfully!'); window.location.href='../../templates/user/user-signin.php';</script>";

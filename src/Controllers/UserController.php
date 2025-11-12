@@ -49,7 +49,9 @@
         $user->name = mysqli_real_escape_string($this->conn, trim($_POST["user-name"]));
         $user->email = mysqli_real_escape_string($this->conn, trim($_POST["user-email"]));
         $user->phoneNo = mysqli_real_escape_string($this->conn, trim($_POST["user-phone"]));
-        $user->password = mysqli_real_escape_string($this->conn, $password);
+    // Hash password before storing
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $user->password = mysqli_real_escape_string($this->conn, $hashedPassword);
         $house = mysqli_real_escape_string($this->conn, trim($_POST["house"]));
         $street = mysqli_real_escape_string($this->conn, trim($_POST["street"]));
         $city = mysqli_real_escape_string($this->conn, trim($_POST["city"]));

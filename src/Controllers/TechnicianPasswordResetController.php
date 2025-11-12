@@ -58,9 +58,10 @@ class TechnicianPasswordResetController {
                 exit;
             }
 
-            // Reset password
+            // Reset password with hashing
             $email = $_SESSION['reset_tech_email'];
-            if ($this->technician->resetPassword($email, $newPassword)) {
+            $hashed = password_hash($newPassword, PASSWORD_DEFAULT);
+            if ($this->technician->resetPassword($email, $hashed)) {
                 // Clear session
                 unset($_SESSION['reset_tech_email']);
                 echo "<script>alert('Password updated successfully!'); window.location.href='../../templates/technician/technician-signin.php';</script>";

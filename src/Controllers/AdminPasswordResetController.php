@@ -58,9 +58,10 @@ class AdminPasswordResetController {
                 exit;
             }
 
-            // Reset password
+            // Reset password with hashing
             $adminId = $_SESSION['reset_admin_id'];
-            if ($this->admin->resetPassword($adminId, $newPassword)) {
+            $hashed = password_hash($newPassword, PASSWORD_DEFAULT);
+            if ($this->admin->resetPassword($adminId, $hashed)) {
                 // Clear session
                 unset($_SESSION['reset_admin_id']);
                 echo "<script>alert('Password updated successfully!'); window.location.href='../../templates/admin/admin-signin.php';</script>";
