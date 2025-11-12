@@ -5,15 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Create Account — Smart Service Allocation System</title>
 
-  <!-- keep your global styles -->
   <link rel="stylesheet" href="../../public/css/global.css">
   <link rel="stylesheet" href="../../public/css/form.css">
   <link rel="stylesheet" href="../../public/css/submit-button.css">
 
-  <!-- page-specific CSS -->
   <link rel="stylesheet" href="../user/css/account.css?v=<?php echo filemtime(__DIR__.'/css/account.css'); ?>">
 
-  <!-- fonts & icons -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/781c7c7d6c.js" crossorigin="anonymous"></script>
 </head>
@@ -28,7 +25,7 @@
           <p class="lead">Add a new user to the system</p>
         </header>
 
-        <form action="../../src/Controllers/UserController.php" method="post" class="register-form" id="createForm" novalidate>
+        <form action="../../src/Controllers/UserController.php" method="post" class="register-form" id="createForm">
           <input type="hidden" name="action" value="register">
 
           <div class="row">
@@ -74,14 +71,14 @@
               <label for="user-password">Password <span class="req">*</span></label>
               <div class="input with-icon">
                 <input type="password" id="user-password" name="user-password" placeholder="Create a strong password" required>
-                <button class="toggle-pass" type="button" aria-label="Show password" data-target="user-password"></i></button>
+                <button class="toggle-pass" type="button" aria-label="Show password" data-target="user-password"><i class="fa-solid fa-eye"></i></i></button>
               </div>
             </div>
             <div class="col">
               <label for="confirm-password">Confirm <span class="req">*</span></label>
               <div class="input with-icon">
                 <input type="password" id="confirm-password" name="confirm-password" placeholder="Enter password again" required>
-                <button class="toggle-pass" type="button" aria-label="Show password" data-target="confirm-password"></button>
+                <button class="toggle-pass" type="button" aria-label="Show password" data-target="confirm-password"><i class="fa-solid fa-eye"></i></button>
               </div>
               <p class="hint" id="matchHint"></p>
             </div>
@@ -99,5 +96,7 @@
       </div>
     </section>
   </main>
+
+  <script src="../user/js/create-account.js"></script>
 </body>
 </html>

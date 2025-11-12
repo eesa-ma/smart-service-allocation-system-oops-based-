@@ -15,13 +15,27 @@ class User
 
     public function register()
     {
+        // Check if email already exists
+        $existingUser = $this->findByEmail($this->email);
+        if ($existingUser) {
+            return "email_exists"; // Email already exists
+        }
         
-    $sql = "INSERT INTO `user` (Name, Email, Phone_No, Address, Password) 
-        VALUES ('$this->name', '$this->email', '$this->phoneNo', '$this->address', '$this->password')";
+        // Check if phone number already exists
+        $phoneCheck = "SELECT * FROM `user` WHERE Phone_No = '$this->phoneNo'";
+        $result = mysqli_query($this->conn, $phoneCheck);
+        if ($result && mysqli_num_rows($result) > 0) {
+            return "phone_exists"; // Phone already exists
+        }
+        
+        $sql = "INSERT INTO `user` (Name, Email, Phone_No, Address, Password) 
+            VALUES ('$this->name', '$this->email', '$this->phoneNo', '$this->address', '$this->password')";
 
         if (mysqli_query($this->conn, $sql)) {
             return true;
         } else {
+            // Log the error for debugging
+            error_log("User registration error: " . mysqli_error($this->conn));
             return false;
         }
     }
