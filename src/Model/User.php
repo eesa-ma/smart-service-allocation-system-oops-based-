@@ -28,8 +28,9 @@ class User
             return "phone_exists"; // Phone already exists
         }
         
+        $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
         $sql = "INSERT INTO `user` (Name, Email, Phone_No, Address, Password) 
-            VALUES ('$this->name', '$this->email', '$this->phoneNo', '$this->address', '$this->password')";
+            VALUES ('$this->name', '$this->email', '$this->phoneNo', '$this->address', '$hashedPassword')";
 
         if (mysqli_query($this->conn, $sql)) {
             return true;
@@ -61,7 +62,8 @@ class User
     }
 
     public function resetPassword($email, $newPassword) {
-        $query = "UPDATE user SET Password = '$newPassword' WHERE Email = '$email'";
+        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+        $query = "UPDATE user SET Password = '$hashedPassword' WHERE Email = '$email'";
         
         if (mysqli_query($this->conn, $query)) {
             return true;
