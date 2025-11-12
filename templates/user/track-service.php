@@ -79,7 +79,7 @@ $requests = $serviceRequest->getUserServiceRequests($userId);
                                         break;
                                     case 'assigned':
                                     case 'accepted':
-                                        $icon = 'fa-spinner fa-spin';
+                                        $icon = 'fa-spinner';
                                         $displayStatus = 'In Progress';
                                         $statusLower = 'inprogress'; // for CSS class
                                         break;

@@ -75,16 +75,5 @@
             </form>
         </div>
     </div>
-
-    <script>
-        // Loading state on form submit
-        const form = document.getElementById('signinForm');
-        const submitBtn = form.querySelector('.btn-submit');
-        
-        form.addEventListener('submit', function() {
-            submitBtn.classList.add('loading');
-            submitBtn.disabled = true;
-        });
-    </script>
 </body>
 </html>
